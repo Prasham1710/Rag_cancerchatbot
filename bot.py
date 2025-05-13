@@ -6,7 +6,6 @@ from langchain_community.vectorstores import FAISS
 from langchain.chains import RetrievalQA
 from langchain_ollama import ChatOllama
 
-# ------------------- UI Styling -------------------
 st.markdown("""
 <style>
     .main, .block-container {
@@ -41,7 +40,6 @@ st.markdown("""
 st.title("🧠 Cancer Buddy")
 st.caption("🚀 Your Cancer research assistant powered by RAG")
 
-# ------------------- LLM and Vector Store -------------------
 llm_engine = ChatOllama(
     model="deepseek-r1:1.5b",
     base_url="http://localhost:11434",
@@ -71,7 +69,6 @@ if "message_log" not in st.session_state:
         {"role": "ai", "content": "Hi! I'm CancerBuddy. How can I help you today? 💻"}
     ]
 
-# ------------------- Format Final Response -------------------
 def format_final_response(raw_response, sources, query):
     cleaned_response = re.sub(r"<\/?think.?>|\[thinking.?\]", "", raw_response, flags=re.IGNORECASE).strip()
 
@@ -93,7 +90,6 @@ def format_final_response(raw_response, sources, query):
 
     return cleaned_response
 
-# ------------------- Chat Interface -------------------
 user_query = st.chat_input("Type your question here...")
 
 if user_query:
@@ -107,7 +103,6 @@ if user_query:
     st.session_state.message_log.append({"role": "ai", "content": final_response})
     st.rerun()
 
-# ------------------- Display Chat -------------------
 with st.container():
     for msg in st.session_state.message_log:
         with st.chat_message(msg["role"]):
